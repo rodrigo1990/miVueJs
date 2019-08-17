@@ -1,0 +1,36 @@
+ul.flex {
+	div.producto{
+		background:white;
+		border:1px solid lightgrey;
+		border-radius:5px;
+	    padding: 20px;
+		width: 247px;
+		.img{
+			width: 170px;
+		    height: 138px;
+		    background-position: center;
+   			 background-size: cover;
+		}
+		
+		h4{
+		    margin-bottom: 31px;
+		    height: 3em;
+
+		}
+
+		.modelo{
+			margin-top:15px;
+		}
+		.marca{
+			margin-bottom:15px;
+		}
+
+		a.comprar-btn{
+			background:black;
+			color:white;
+			padding:10px;
+		}
+	}
+}
+
+

@@ -1,0 +1,73 @@
+.carrito-cont{
+	.bkground>div>ul>li:not(:nth-child(1)){
+		margin-top:15px;
+	}
+
+	.bkground>div>ul>li>hr{
+		margin-top:15px;
+		height: 1px;
+	    width: 96%;
+	    background: #e6e6e6;
+	    -moz-box-shadow: 3px 3px 5px 6px #ccc;
+	    -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+	    box-shadow: -4px 1px 8px 3px #ccc;
+	}
+
+	
+
+	.bkground>div{
+	    width: 25vw;
+	    height: 100vh;
+	    background: #ececec;
+	    left: 0;
+	    position: absolute;
+	    opacity: 0;
+	    padding: 10px 0 0 10px;
+
+	   
+	}
+
+	ul{
+
+		li{
+			.close-btn{
+					right: 7px;
+				}
+
+			ul.producto{
+				li:nth-child(2){
+				    margin-top: 19px;
+				 	margin-left: 13px;
+				}
+				li h4{
+					text-align: left;
+				}
+				.img{
+					width: 150px;
+					height: 150px;
+					background-position: center;
+				 	background-size: cover;
+			 	    box-shadow: -2px 6px 8px 3px #ccc;
+				}
+
+
+			}
+		}
+	}
+}
+
+
+.close-btn{
+	position:absolute;
+}
+
+.bkground>.close-btn{
+    	
+    	top:0.5rem;
+    	right:0.5rem;
+
+    	i{
+		    color: white;
+			font-size: 3.5rem;
+    	}
+    }
