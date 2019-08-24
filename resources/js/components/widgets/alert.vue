@@ -18,10 +18,9 @@
 
 <script>
 import { EventBus } from '../bus/event-bus.js';
+
+
     export default {
-        props:{
-            msg:null,
-        },
         mounted() {        
             EventBus.$on('alertar', msg => {
                   this.msg = msg;
@@ -30,7 +29,7 @@ import { EventBus } from '../bus/event-bus.js';
 
         data(){
             return{
-      		
+      		    msg:null
             }
         },
         methods:{

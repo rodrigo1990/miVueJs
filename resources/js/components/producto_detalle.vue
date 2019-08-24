@@ -13,7 +13,7 @@
                     	${{precio}}
                     </div>
                     <div>
-                    	<a class="comprar-btn" v-on:click="$emit('alertar','Cargaste una '+ modelo +' en tu carrito de compras'); cargarCarrito(''+id+'')"> COMPRAR</a>
+                    	<a class="comprar-btn" v-on:click=" cargarCarrito()"> COMPRAR</a>
                     </div>
                 </div>
             </div>
@@ -24,6 +24,7 @@
 <script>
 
 import { EventBus } from './bus/event-bus.js';
+import { carritoStore } from './store/carritoStore.js';
 
     export default {
         props:{
@@ -49,16 +50,14 @@ import { EventBus } from './bus/event-bus.js';
         },
 
         methods:{
-          cargarCarrito: function(id){
-            axios
-            .post('/cargarCarrito',{
-              id:id
+          cargarCarrito: function(){
+            
+            carritoStore.dispatch('agregarACarrito',{
+                id:this.id
+            });
 
-            })
-            .then(function(response){
-              console.log(response.data)
-            })
-
+            this.$emit('alertar','Cargaste una '+ this.modelo +' en tu carrito de compras');
+          
             EventBus.$emit('contarCarrito', true);
         }
           

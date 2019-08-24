@@ -35,9 +35,12 @@
           precio:String,
         },
         mounted() {
-
+          console.log(this.id);
           EventBus.$on('confirmEliminarProductoDeCarrito', data =>{
-            this.eliminarProducto(data.idProducto);
+            if(this.id==data.idProducto){
+              console.log("idProducto:"+this.id);
+              this.eliminarProducto(this.id);
+            }
           });
 
         },
@@ -50,19 +53,9 @@
         },
 
         methods:{
-          cargarCarrito: function(id){
-            axios
-            .post('/cargarCarrito',{
-              id:id
-
-            })
-            .then(function(response){
-              console.log(response.data)
-            })
-          },
           eliminarProducto:function(id){
 
-
+            console.log("eliminar"+id);
             axios
             .post('/eliminarProductoDeCarrito',{
               id:id

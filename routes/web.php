@@ -18,8 +18,15 @@ Route::get('/', function () {
 
 Route::get('/get','ProductoController@getProductos');
 Route::get('/getCategorias','ProductoController@getCategorias');
+Route::get('/getBuscarProductos/{producto}','ProductoController@getBuscarProductos');
+
+
 Route::post('/cargarCarrito','CarritoController@cargarCarrito');
+
+
 Route::get('/getCarrito','CarritoController@getCarrito');
+
+
 
 Route::post('/eliminarProductoDeCarrito','CarritoController@eliminarProductoDeCarrito');
 

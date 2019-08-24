@@ -10679,6 +10679,10 @@ a {
   cursor: pointer;
 }
 
+ul li {
+  transition: all 0.15s linear;
+}
+
 ul {
   margin: 0;
   padding: 0;
@@ -10694,7 +10698,7 @@ ul.flex li {
   list-style: none;
 }
 
-ul.flex li:not(:nth-child(1)) {
+ul.flex > li:not(:nth-child(1)) {
   margin-left: 30px;
 }
 
@@ -10740,7 +10744,41 @@ header nav .col-lg-7 {
   margin-top: 10px;
 }
 
-header nav .col-lg-7 ul.flex li ul {
+header nav .col-lg-7 ul.flex > li:first-child {
+  width: 500px;
+}
+
+header nav .col-lg-7 ul.flex li input {
+  margin-top: -5px;
+  width: 100%;
+}
+
+header nav .col-lg-7 ul.flex li div.result-cont {
+  position: absolute;
+  width: 500px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  background: white;
+}
+
+header nav .col-lg-7 ul.flex li div.result-cont li {
+  padding: 5px 5px 5px 10px;
+  cursor: pointer;
+}
+
+header nav .col-lg-7 ul.flex li div.result-cont li a {
+  color: black !important;
+}
+
+header nav .col-lg-7 ul.flex li div.result-cont li:hover {
+  background: gray;
+}
+
+header nav .col-lg-7 ul.flex li div.result-cont li:hover a {
+  color: white !important;
+}
+
+header nav .col-lg-7 ul.flex li .submenu {
   position: absolute;
   z-index: 10;
   background: white;
@@ -10749,12 +10787,12 @@ header nav .col-lg-7 ul.flex li ul {
   font-size: 15px;
 }
 
-header nav .col-lg-7 ul.flex li ul li {
+header nav .col-lg-7 ul.flex li .submenu li {
   margin-left: 0 !important;
 }
 
-header nav .col-lg-7 ul.flex li ul li a {
-  color: grey !important;
+header nav .col-lg-7 ul.flex li .submenu li a {
+  color: lightGray !important;
 }
 
 header nav .col-lg-2 {

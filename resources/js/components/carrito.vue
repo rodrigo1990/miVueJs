@@ -7,23 +7,43 @@
         <div class="anchura">
             <ul>
                 <li v-for="producto, key in carrito" :id="producto.id">
-                      <a class="close-btn" v-on:click="eliminarProductoDelCarrito(key,producto.id,producto.modelo)"><i class="far fa-times-circle"></i></a>
+                        
+                      <a class="close-btn" v-on:click="emitirConfirm(producto.id,producto.modelo,key)"><i class="far fa-times-circle"></i></a>
 
                     <div v-for="marca in producto.marca">
                         <!-- REF="PRODUCTOCART" => Estoy referenciando al producto como productoCart -->
-                        <productoCart
+
+                        <ul class="flex producto text-center" >  
+                            <li>                    
+                                <div class="img"  v-bind:style="{ backgroundImage: 'url(/img/' + producto.imagenes.nombre_archivo + ')' }" alt=""></div>
+                            </li>
+                            <li>
+                                <h4>
+                                    {{producto.modelo}}
+                                </h4>
+                                <h4>
+                                    {{marca.descripcion}}
+
+                                </h4>
+                                <h4>
+                                    ${{producto.precio}}
+                                </h4>
+                            </li>
+                        </ul>
+
+                      <!--    <productoCart
                                 v-bind:key="producto.id"
                                 v-bind:id="producto.id"
-                                v-bind:modelo="producto.modelo"
-                                v-bind:marca = "marca.descripcion"
-                                v-bind:img = "producto.imagenes.nombre_archivo"
-                                v-bind:precio = "producto.precio"
+                                v-bind:modelo=""
+                                v-bind:marca = ""
+                                v-bind:img = ""
+                                v-bind:precio = ""
                                 ref="productoCart"
                                 >
                                     
 
 
-                        </productoCart>
+                        </productoCart>-->
                     </div>
                     <hr>
                 </li>
@@ -31,11 +51,13 @@
             </ul>
         </div>
     </div>
+    
 </div>
 </template>
 
 <script>
 import { EventBus } from './bus/event-bus.js';
+import { carritoStore } from './store/carritoStore.js';
 Vue.component('productoCart', require('./producto_cart.vue').default);
     export default {
         mounted() {
@@ -50,9 +72,9 @@ Vue.component('productoCart', require('./producto_cart.vue').default);
 		      })
 
 
-            EventBus.$on('confirmEliminarProductoDeCarrito', data => {
+            EventBus.$on('emitirEliminarProductoDeCarrito', data => {
                 console.log("desde carrito"+data.idProducto+"");
-                  $("li#"+data.idProducto+"").fadeOut();
+                $("li#"+data.idProducto+"").fadeOut();
                 });
 
         },
@@ -68,16 +90,20 @@ Vue.component('productoCart', require('./producto_cart.vue').default);
             }
         },
         methods:{
-            eliminarProductoDelCarrito:function(key,id,modelo){
-                
-                var mensaje = "¿Desea eliminar "+modelo+"?"; 
-                
-                EventBus.$emit('confirm',{'msg':mensaje,'key':key,'id':id})
-                //accedo al metodo de productoCart que eliminara el producto del carrito
-                //this.$refs.productoCart[key].eliminarProducto(id);
+            
 
-               // $("li#"+id+"").fadeOut();
-            }
+
+          emitirConfirm:function(id,modelo,key){
+
+            var mensaje = "¿Desea eliminar "+modelo+"?"; 
+                
+            EventBus.$emit('confirm',{'msg':mensaje,'key':key,'id':id})
+
+
+
+            
+
+          }
         }
     }
 </script>

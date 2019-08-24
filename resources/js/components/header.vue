@@ -12,6 +12,10 @@
 				<div class="col-lg-7">
 						<ul class="flex">
 							<li>
+								<buscador></buscador>
+							</li>
+						
+							<li>
 								<router-link to="/home">Home</router-link>
 							</li>
 							<li v-on:mouseover="mostrarSubmenu = true" v-on:mouseleave="mostrarSubmenu = false">
@@ -20,7 +24,7 @@
 								</a>
 								
 									<transition name="fade">	
-										<ul v-if="mostrarSubmenu">
+										<ul class="submenu" v-if="mostrarSubmenu">
 											<li>
 												<router-link to="/content/Producto 1/Esto es las descripcion del producto">Producto 1</router-link>
 											</li>
@@ -30,6 +34,7 @@
 											<li>
 												<router-link to="/content/Producto 3/Esto es las descripcion del producto">Producto 3</router-link>
 											</li>
+											
 											
 
 										</ul>
@@ -42,7 +47,8 @@
 							<router-link to="/empresa">La empresa</router-link>
 							
 							</li>
-						
+
+
 			
 							
 						</ul>
@@ -69,7 +75,7 @@
 
 <script>
 import { EventBus } from './bus/event-bus.js';
-
+Vue.component('buscador', require('./widgets/buscador.vue').default);
     export default {	
         mounted() {
             console.log('Component mounted.')
@@ -110,8 +116,6 @@ import { EventBus } from './bus/event-bus.js';
 		      	}else{
 		      		this.cantidadCarrito = 0;
 		      	}
-		      	console.log(this.carrito);
-		      	console.log(this.cantidadCarrito);
         	}
         }
     }

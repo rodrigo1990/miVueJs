@@ -9,9 +9,14 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 import VueRouter from 'vue-router'
+import Vuex from 'vuex'
 import { EventBus } from './components/bus/event-bus.js'
+import {carritoStore} from './components/store/carritoStore.js'
+import {buscadorStore} from './components/store/buscadorStore.js'
 
 Vue.use(VueRouter)
+Vue.use(Vuex)
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -43,6 +48,9 @@ const router = new VueRouter({
 	routes
 });
 
+
+
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -53,6 +61,8 @@ const router = new VueRouter({
 
 const app = new Vue({
   router,
+  carritoStore,
+  buscadorStore,
       data:{
     	showCart:false,
     },
@@ -61,9 +71,12 @@ const app = new Vue({
         this.showCart = bool;
       },
       alertar: function ($msg) {
-            
-            EventBus.$emit('alertar', $msg);
+
+            //store.state.msg =$msg;
+             
+            EventBus.$emit('alertar',$msg);
         }
+
     }
 
 
