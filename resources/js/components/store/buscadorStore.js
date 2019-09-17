@@ -17,11 +17,18 @@ export const buscadorStore = new Vuex.Store({
   	},
   	actions:{
   		buscar({commit},data){
-  		axios
+        return new Promise((resolve, reject) => {
+          axios
             .get('/getBuscarProductos/'+data.producto+'/')
             .then( response => {
-              commit('setProductos',response.data);
+              //commit('setProductos',response.data);
+
+              resolve(response.data)
+            }, error => {
+              reject(error)
             })
+        })
+  		
   		}
 
 

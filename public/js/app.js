@@ -1897,6 +1897,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 Vue.component('productoCart', __webpack_require__(/*! ./producto_cart.vue */ "./resources/js/components/producto_cart.vue")["default"]);
@@ -2527,6 +2531,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {},
@@ -2539,12 +2546,19 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     buscar: function buscar() {
+      var _this = this;
+
       if (this.input == '') {
         this.existeProducto = false;
       } else {
         var productos = _store_buscadorStore_js__WEBPACK_IMPORTED_MODULE_0__["buscadorStore"].dispatch('buscar', {
           producto: this.input
-        }).then(this.productos = _store_buscadorStore_js__WEBPACK_IMPORTED_MODULE_0__["buscadorStore"].state.productos); //this.productos = buscadorStore.state.productos
+        }).then(function (response) {
+          console.log(response);
+          _this.productos = response;
+        }, function (error) {
+          alert(error);
+        }); //this.productos = buscadorStore.state.productos
         //console.log(this.productos)
 
         if (productos) {
@@ -2564,7 +2578,10 @@ __webpack_require__.r(__webpack_exports__);
       return alert;
     }(function (id) {
       alert(id);
-    })
+    }),
+    setExisteProducto: function setExisteProducto() {
+      this.existeProducto = false;
+    }
   }
 });
 
@@ -38011,6 +38028,14 @@ var render = function() {
                               _vm._s(producto.precio) +
                               "\r\n                                "
                           )
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          attrs: { type: "text", name: "cantidad" }
+                        }),
+                        _vm._v(" "),
+                        _c("label", { attrs: { for: "cantidad" } }, [
+                          _vm._v("unidades")
                         ])
                       ])
                     ])
@@ -38585,108 +38610,135 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "buscador-cont" }, [
-    _c("input", {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.input,
-          expression: "input"
-        }
-      ],
-      staticClass: "form-control",
-      attrs: { type: "text", placeholder: "Ingrese su mensaje aqui" },
-      domProps: { value: _vm.input },
-      on: {
-        keyup: function($event) {
-          return _vm.buscar()
-        },
-        input: function($event) {
-          if ($event.target.composing) {
-            return
+  return _c(
+    "div",
+    { staticClass: "buscador-cont" },
+    [
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.input,
+            expression: "input"
           }
-          _vm.input = $event.target.value
+        ],
+        staticClass: "form-control",
+        attrs: { type: "text", placeholder: "Ingrese su mensaje aqui" },
+        domProps: { value: _vm.input },
+        on: {
+          keyup: function($event) {
+            return _vm.buscar()
+          },
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.input = $event.target.value
+          }
         }
-      }
-    }),
-    _vm._v(" "),
-    _vm.existeProducto
-      ? _c("div", [
-          _c("div", { staticClass: "result-cont" }, [
-            _c(
-              "ul",
-              _vm._l(_vm.productos, function(producto, index) {
-                return _c(
-                  "li",
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        attrs: {
-                          to:
-                            "/producto_detalle/" +
-                            producto.id +
-                            "/" +
-                            producto.marca[0].descripcion +
-                            "/" +
-                            producto.modelo +
-                            "/" +
-                            producto.precio
-                        }
+      }),
+      _vm._v(" "),
+      _c("transition", { attrs: { name: "fade", mode: "out-in" } }, [
+        _vm.existeProducto
+          ? _c("div", [
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "closable",
+                      rawName: "v-closable",
+                      value: {
+                        exclude: [".result-cont"],
+                        handler: "setExisteProducto"
                       },
-                      [
-                        _c("div", { staticClass: "description" }, [
-                          _vm._v(
-                            "\r\n                        \r\n\r\n                            \r\n                       \r\n                            " +
-                              _vm._s(producto.modelo) +
-                              "\r\n                       \r\n\r\n                        "
-                          ),
-                          _c("br"),
-                          _vm._v(" "),
-                          _c("span", [
-                            _vm._v(
-                              "\r\n                            " +
-                                _vm._s(producto.marca[0].descripcion) +
-                                "\r\n                        \r\n                        "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("br"),
-                          _vm._v(" "),
-                          _c("span", [
-                            _vm._v(
-                              "\r\n                            Categoría: " +
-                                _vm._s(producto.categoria[0].descripcion) +
-                                "\r\n                        "
-                            )
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "img-cont" }, [
-                          _c("div", {
-                            staticClass: "img",
-                            style: {
-                              backgroundImage:
-                                "url(/img/" +
-                                producto.imagenes.nombre_archivo +
-                                ")"
-                            },
-                            attrs: { alt: "" }
-                          })
-                        ])
-                      ]
-                    )
+                      expression:
+                        "{\r\n                                                    exclude: ['.result-cont'],\r\n                                                    handler: 'setExisteProducto'\r\n                                                  }"
+                    }
                   ],
-                  1
-                )
-              }),
-              0
-            )
-          ])
-        ])
-      : _vm._e()
-  ])
+                  staticClass: "result-cont  fadeIn "
+                },
+                [
+                  _c(
+                    "ul",
+                    _vm._l(_vm.productos, function(producto, index) {
+                      return _c(
+                        "li",
+                        [
+                          _c(
+                            "router-link",
+                            {
+                              attrs: {
+                                to:
+                                  "/producto_detalle/" +
+                                  producto.id +
+                                  "/" +
+                                  producto.marca[0].descripcion +
+                                  "/" +
+                                  producto.modelo +
+                                  "/" +
+                                  producto.precio
+                              }
+                            },
+                            [
+                              _c("div", { staticClass: "description" }, [
+                                _vm._v(
+                                  "\r\n                            \r\n\r\n                                \r\n                           \r\n                                " +
+                                    _vm._s(producto.modelo) +
+                                    "\r\n                           \r\n\r\n                            "
+                                ),
+                                _c("br"),
+                                _vm._v(" "),
+                                _c("span", [
+                                  _vm._v(
+                                    "\r\n                                " +
+                                      _vm._s(producto.marca[0].descripcion) +
+                                      "\r\n                            \r\n                            "
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("br"),
+                                _vm._v(" "),
+                                _c("span", [
+                                  _vm._v(
+                                    "\r\n                                Categoría: " +
+                                      _vm._s(
+                                        producto.categoria[0].descripcion
+                                      ) +
+                                      "\r\n                            "
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "img-cont" }, [
+                                _c("div", {
+                                  staticClass: "img",
+                                  style: {
+                                    backgroundImage:
+                                      "url(/img/" +
+                                      producto.imagenes.nombre_archivo +
+                                      ")"
+                                  },
+                                  attrs: { alt: "" }
+                                })
+                              ])
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    }),
+                    0
+                  )
+                ]
+              )
+            ])
+          : _vm._e()
+      ])
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -54666,6 +54718,35 @@ Vue.component('header-component', __webpack_require__(/*! ./components/header.vu
 Vue.component('carrito', __webpack_require__(/*! ./components/carrito.vue */ "./resources/js/components/carrito.vue")["default"]);
 Vue.component('alert', __webpack_require__(/*! ./components/widgets/alert.vue */ "./resources/js/components/widgets/alert.vue")["default"]);
 Vue.component('confirm', __webpack_require__(/*! ./components/widgets/confirm.vue */ "./resources/js/components/widgets/confirm.vue")["default"]);
+var handleOutsideClick;
+Vue.directive('closable', {
+  bind: function bind(el, binding, vnode) {
+    handleOutsideClick = function handleOutsideClick(e) {
+      e.stopPropagation();
+      var _binding$value = binding.value,
+          handler = _binding$value.handler,
+          exclude = _binding$value.exclude;
+      var clickedOnExcludedEl = false;
+      exclude.forEach(function (refName) {
+        if (!clickedOnExcludedEl) {
+          var excludedEl = vnode.context.$refs[refName];
+          clickedOnExcludedEl = excludedEl.contains(e.target);
+        }
+      });
+
+      if (!el.contains(e.target) && !clickedOnExcludedEl) {
+        vnode.context[handler]();
+      }
+    };
+
+    document.addEventListener('click', handleOutsideClick);
+    document.addEventListener('touchstart', handleOutsideClick);
+  },
+  unbind: function unbind() {
+    document.removeEventListener('click', handleOutsideClick);
+    document.removeEventListener('touchstart', handleOutsideClick);
+  }
+});
 var routes = [{
   path: '/content/:headerName/:content',
   component: __webpack_require__(/*! ./components/content.vue */ "./resources/js/components/content.vue")["default"],
@@ -55367,8 +55448,13 @@ var buscadorStore = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
   actions: {
     buscar: function buscar(_ref, data) {
       var commit = _ref.commit;
-      axios.get('/getBuscarProductos/' + data.producto + '/').then(function (response) {
-        commit('setProductos', response.data);
+      return new Promise(function (resolve, reject) {
+        axios.get('/getBuscarProductos/' + data.producto + '/').then(function (response) {
+          //commit('setProductos',response.data);
+          resolve(response.data);
+        }, function (error) {
+          reject(error);
+        });
       });
     }
   }

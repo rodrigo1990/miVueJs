@@ -9,6 +9,19 @@
   transition: all .5s cubic-bezier(.55,0,.1,1);
 }
 
+.fadeIn{
+  animation:fadeIn 0.5s;
+}
+
+@keyframes fadeIn{
+  0%{
+    opacity: 0
+  }
+
+  100%{
+    opacity: 1
+  }
+}
 
 .slide-leave-active,
 .slide-enter-active {

@@ -28,6 +28,10 @@
                                 <h4>
                                     ${{producto.precio}}
                                 </h4>
+                                    <input type="text" name="cantidad"> 
+                                <label for="cantidad">unidades</label>
+                                
+
                             </li>
                         </ul>
 

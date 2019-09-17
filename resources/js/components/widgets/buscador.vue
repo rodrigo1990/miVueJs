@@ -3,51 +3,54 @@
 <div class="buscador-cont">
 	<input type="text" class="form-control" v-model="input" v-on:keyup="buscar()" placeholder="Ingrese su mensaje aqui">
 
-
+    <transition name="fade" mode='out-in'> 
 	<div v-if="existeProducto">
-
-        <div class="result-cont">
-    		<ul>
-    			<li v-for="(producto,index) in productos">
-                 <router-link v-bind:to="'/producto_detalle/'+producto.id+'/'+producto.marca[0].descripcion+'/'+producto.modelo+'/'+producto.precio">    
-                    <div class="description">
-                        
-
+        
+            <div class="result-cont  fadeIn " v-closable="{
+                                                    exclude: ['.result-cont'],
+                                                    handler: 'setExisteProducto'
+                                                  }">
+        		<ul>
+        			<li v-for="(producto,index) in productos">
+                     <router-link v-bind:to="'/producto_detalle/'+producto.id+'/'+producto.marca[0].descripcion+'/'+producto.modelo+'/'+producto.precio">    
+                        <div class="description">
                             
-                       
-                            {{producto.modelo}}
-                       
 
-                        <br>
+                                
+                           
+                                {{producto.modelo}}
+                           
 
-                        <span >
-                            {{producto.marca[0].descripcion}}
-                        
-                        </span>
-                        
-                         <br>   
+                            <br>
 
-                        <span>
-                            Categoría: {{producto.categoria[0].descripcion}}
-                        </span>
+                            <span >
+                                {{producto.marca[0].descripcion}}
+                            
+                            </span>
+                            
+                             <br>   
 
-                       
+                            <span>
+                                Categoría: {{producto.categoria[0].descripcion}}
+                            </span>
 
-                    </div>
+                
+                        </div>
 
-                    <div class="img-cont">
+                        <div class="img-cont">
 
-                        <div class="img"  v-bind:style="{ backgroundImage: 'url(/img/' + producto.imagenes.nombre_archivo + ')' }" alt=""></div>
+                            <div class="img"  v-bind:style="{ backgroundImage: 'url(/img/' + producto.imagenes.nombre_archivo + ')' }" alt=""></div>
 
-                    </div>
+                        </div>
 
-                 </router-link>
-    			</li>
-    		</ul>
-        </div>
+                     </router-link>
+        			</li>
+        		</ul>
+            </div>
+       
 
 	</div>
-
+     </transition>
 
 	
 </div>
@@ -76,10 +79,13 @@ import {buscadorStore} from '../store/buscadorStore.js'
             		
                     var productos = buscadorStore.dispatch('buscar',{
             			producto:this.input
-            		}).then(
+            		}).then( response => {
 
-                    this.productos = buscadorStore.state.productos
-
+                    console.log(response)
+                    this.productos = response
+                    }, error =>{
+                        alert(error)
+                    } 
                     )
 
             		//this.productos = buscadorStore.state.productos
@@ -94,6 +100,9 @@ import {buscadorStore} from '../store/buscadorStore.js'
         	},
             alert:function(id){
                 alert(id);
+            },
+            setExisteProducto:function(){
+                this.existeProducto=false
             }
         }
     }
