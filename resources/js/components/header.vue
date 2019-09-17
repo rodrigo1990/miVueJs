@@ -12,7 +12,7 @@
 				<div class="col-lg-7">
 						<ul class="flex">
 							<li>
-								<buscador></buscador>
+								<buscador id="buscador"></buscador>
 							</li>
 						
 							<li>

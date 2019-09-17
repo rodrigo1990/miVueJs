@@ -17,10 +17,17 @@ class ProductoController extends Controller
 
     public function getBuscarProductos(Request $request){
 
-    	$productos = DB::table('producto')
-    							->where('modelo','like','%'.$request->producto.'%')
-    							->get();
+    	/*$productos = DB::table('producto')
+    						->join('imagen_producto','producto.id','imagen_producto.producto_id')
+							->where('producto.modelo','like','%'.$request->producto.'%')
 
+    							->get();*/
+
+        $productos = Producto::with('Marca')
+                              ->with('Imagenes')
+                              ->with('Categoria')
+                              ->where('producto.modelo','like','%'.$request->producto.'%')
+                              ->get();
     	return $productos;
     }
 }

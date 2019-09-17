@@ -8,11 +8,40 @@
 
         <div class="result-cont">
     		<ul>
-    			<li v-for="producto in productos">
-                    <a v-on:click="alert(producto.id)">
-                        {{producto.modelo}}				
-                    </a>
+    			<li v-for="(producto,index) in productos">
+                 <router-link v-bind:to="'/producto_detalle/'+producto.id+'/'+producto.marca[0].descripcion+'/'+producto.modelo+'/'+producto.precio">    
+                    <div class="description">
+                        
 
+                            
+                       
+                            {{producto.modelo}}
+                       
+
+                        <br>
+
+                        <span >
+                            {{producto.marca[0].descripcion}}
+                        
+                        </span>
+                        
+                         <br>   
+
+                        <span>
+                            Categoría: {{producto.categoria[0].descripcion}}
+                        </span>
+
+                       
+
+                    </div>
+
+                    <div class="img-cont">
+
+                        <div class="img"  v-bind:style="{ backgroundImage: 'url(/img/' + producto.imagenes.nombre_archivo + ')' }" alt=""></div>
+
+                    </div>
+
+                 </router-link>
     			</li>
     		</ul>
         </div>
@@ -41,22 +70,26 @@ import {buscadorStore} from '../store/buscadorStore.js'
         },
         methods:{
         	buscar:function(){
-
                 if(this.input==''){
                     this.existeProducto=false;
                 }else{
-
-            		buscadorStore.dispatch('buscar',{
+            		
+                    var productos = buscadorStore.dispatch('buscar',{
             			producto:this.input
-            		})
+            		}).then(
 
-            		this.productos = buscadorStore.state.productos
+                    this.productos = buscadorStore.state.productos
 
-                    if(this.productos){
+                    )
+
+            		//this.productos = buscadorStore.state.productos
+
+                    //console.log(this.productos)
+
+                    if(productos){
                         this.existeProducto=true
                     }
 
-                    console.log(this.productos)
                 }
         	},
             alert:function(id){

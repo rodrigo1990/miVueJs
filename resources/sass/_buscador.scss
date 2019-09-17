@@ -1,0 +1,58 @@
+#buscador{
+input{
+		margin-top:-5px;
+		width: 100%;
+	}
+
+	div.result-cont{
+		position:absolute;
+		width: $ancho-contenedor-buscador;
+	    border-bottom-left-radius: 5px;
+		border-bottom-right-radius: 5px;
+		background:white;
+		z-index:1;
+		li:not(:last-child){
+			border-bottom:1px solid lightgray;
+		}
+		li{
+			padding:10px 5px 10px 10px;
+			cursor: pointer;
+			position:relative;
+	        height: 121px;
+
+	        .description{
+	        	color:grey;
+	        }
+		
+
+			a{
+				color:black !important;
+
+					>div{
+					width: 50%;
+					float:left;
+
+					>div.img{
+						width: 100px;
+						height: 100px;
+						margin:auto;
+					}
+				}
+
+				
+			}
+
+			
+		
+		}
+		li:hover{
+			background:gray;
+
+
+		}
+
+		li:hover .description{
+			color:white !important;
+		}
+	}
+}

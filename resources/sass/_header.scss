@@ -25,34 +25,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#666666', end
 				}
 				li{
 
-					input{
-						margin-top:-5px;
-						width: 100%;
-					}
-
-					div.result-cont{
-						position:absolute;
-						width: $ancho-contenedor-buscador;
-					    border-bottom-left-radius: 5px;
-    					border-bottom-right-radius: 5px;
-    					background:white;
-
-						li{
-							padding:5px 5px 5px 10px;
-							cursor: pointer;
-
-							a{
-								color:black !important;
-							}
-						}
-    					li:hover{
-							background:gray;
-    					}
-
-    					li:hover a{
-							color:white !important;
-    					}
-					}
+					
+					@import 'buscador';
 
 					//SUBMENU
 					.submenu{

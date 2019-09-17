@@ -2498,6 +2498,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {},
@@ -2513,16 +2542,14 @@ __webpack_require__.r(__webpack_exports__);
       if (this.input == '') {
         this.existeProducto = false;
       } else {
-        _store_buscadorStore_js__WEBPACK_IMPORTED_MODULE_0__["buscadorStore"].dispatch('buscar', {
+        var productos = _store_buscadorStore_js__WEBPACK_IMPORTED_MODULE_0__["buscadorStore"].dispatch('buscar', {
           producto: this.input
-        });
-        this.productos = _store_buscadorStore_js__WEBPACK_IMPORTED_MODULE_0__["buscadorStore"].state.productos;
+        }).then(this.productos = _store_buscadorStore_js__WEBPACK_IMPORTED_MODULE_0__["buscadorStore"].state.productos); //this.productos = buscadorStore.state.productos
+        //console.log(this.productos)
 
-        if (this.productos) {
+        if (productos) {
           this.existeProducto = true;
         }
-
-        console.log(this.productos);
       }
     },
     alert: function (_alert) {
@@ -38112,7 +38139,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "col-lg-7" }, [
           _c("ul", { staticClass: "flex" }, [
-            _c("li", [_c("buscador")], 1),
+            _c("li", [_c("buscador", { attrs: { id: "buscador" } })], 1),
             _vm._v(" "),
             _c(
               "li",
@@ -38589,26 +38616,70 @@ var render = function() {
           _c("div", { staticClass: "result-cont" }, [
             _c(
               "ul",
-              _vm._l(_vm.productos, function(producto) {
-                return _c("li", [
-                  _c(
-                    "a",
-                    {
-                      on: {
-                        click: function($event) {
-                          return _vm.alert(producto.id)
+              _vm._l(_vm.productos, function(producto, index) {
+                return _c(
+                  "li",
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        attrs: {
+                          to:
+                            "/producto_detalle/" +
+                            producto.id +
+                            "/" +
+                            producto.marca[0].descripcion +
+                            "/" +
+                            producto.modelo +
+                            "/" +
+                            producto.precio
                         }
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\r\n                        " +
-                          _vm._s(producto.modelo) +
-                          "\t\t\t\t\r\n                    "
-                      )
-                    ]
-                  )
-                ])
+                      },
+                      [
+                        _c("div", { staticClass: "description" }, [
+                          _vm._v(
+                            "\r\n                        \r\n\r\n                            \r\n                       \r\n                            " +
+                              _vm._s(producto.modelo) +
+                              "\r\n                       \r\n\r\n                        "
+                          ),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("span", [
+                            _vm._v(
+                              "\r\n                            " +
+                                _vm._s(producto.marca[0].descripcion) +
+                                "\r\n                        \r\n                        "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("span", [
+                            _vm._v(
+                              "\r\n                            Categoría: " +
+                                _vm._s(producto.categoria[0].descripcion) +
+                                "\r\n                        "
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "img-cont" }, [
+                          _c("div", {
+                            staticClass: "img",
+                            style: {
+                              backgroundImage:
+                                "url(/img/" +
+                                producto.imagenes.nombre_archivo +
+                                ")"
+                            },
+                            attrs: { alt: "" }
+                          })
+                        ])
+                      ]
+                    )
+                  ],
+                  1
+                )
               }),
               0
             )
@@ -55575,8 +55646,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! c:\xampp\htdocs\GitHub\miVueJs\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! c:\xampp\htdocs\GitHub\miVueJs\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\github\mivuejs\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\github\mivuejs\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
