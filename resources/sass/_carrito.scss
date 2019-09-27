@@ -41,6 +41,7 @@
 				}
 				li h4{
 					text-align: left;
+				    margin-bottom: 5px;
 				}
 				.img{
 					width: 150px;
@@ -48,6 +49,16 @@
 					background-position: center;
 				 	background-size: cover;
 			 	    box-shadow: -2px 6px 8px 3px #ccc;
+				}
+
+				input{
+					width: 53px;
+				    float: left;
+				    height: 23px;
+			        margin-right: 6px;
+		            background: transparent;
+	                padding-right: 0;
+
 				}
 
 

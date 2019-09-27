@@ -10,14 +10,13 @@
                     <div class="body">
                         <ul class="flex">
                             <li v-for="producto in productos">
-                                <div v-for="marca in producto.marca">
 
                                 <producto
                                 v-bind:key="producto.id"
                                 v-bind:id="producto.id"
                                 v-bind:modelo="producto.modelo"
-                                v-bind:marca = "marca.descripcion"
-                                v-bind:img = "producto.imagenes.nombre_archivo"
+                                v-bind:marca="producto.marca.descripcion"
+                                v-bind:img = "producto.imagenes[0].nombre_archivo"
                                 v-bind:precio = "producto.precio"
                                
                                 >
@@ -26,7 +25,6 @@
 
                                 </producto>
 
-                                </div>
                              </li>
                         </ul>
                     </div>

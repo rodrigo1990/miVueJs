@@ -10,9 +10,11 @@ window.Vue = require('vue');
 
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
+
 import { EventBus } from './components/bus/event-bus.js'
 import {carritoStore} from './components/store/carritoStore.js'
 import {buscadorStore} from './components/store/buscadorStore.js'
+
 
 Vue.use(VueRouter)
 Vue.use(Vuex)
@@ -36,32 +38,6 @@ Vue.component('carrito', require('./components/carrito.vue').default);
 Vue.component('alert', require('./components/widgets/alert.vue').default);
 Vue.component('confirm', require('./components/widgets/confirm.vue').default);
 
-let handleOutsideClick
-Vue.directive('closable', {
-  bind (el, binding, vnode) {
-    handleOutsideClick = (e) => {
-      e.stopPropagation()
-      const { handler, exclude } = binding.value
-      let clickedOnExcludedEl = false
-      exclude.forEach(refName => {
-        if (!clickedOnExcludedEl) {
-          const excludedEl = vnode.context.$refs[refName]
-          clickedOnExcludedEl = excludedEl.contains(e.target)
-        }
-      })
-      if (!el.contains(e.target) && !clickedOnExcludedEl) {
-        vnode.context[handler]()
-      }
-    }
-    document.addEventListener('click', handleOutsideClick)
-    document.addEventListener('touchstart', handleOutsideClick)
-  },
-
-  unbind () {
-    document.removeEventListener('click', handleOutsideClick)
-    document.removeEventListener('touchstart', handleOutsideClick)
-  }
-})
 
 const routes = [
   { path: '/content/:headerName/:content', component: require('./components/content.vue').default,props:true },

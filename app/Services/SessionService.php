@@ -30,7 +30,7 @@ class SessionService
 
    public function storeSessionData($request) {
 
-    //$request->session()->flush();
+ //   $request->session()->flush();
 
       if ($request->session()->has('productos')) {
           
@@ -57,7 +57,7 @@ class SessionService
 
           if($existe!=true){
 
-            $this->searchAndPush($request->id);
+            $this->searchAndPush($request->id,$request->cantidad);
 
              $productos = $request->session()->get('productos');
 
@@ -65,7 +65,7 @@ class SessionService
 
 
       }else{
-        $this->searchAndPush($request->id);
+        $this->searchAndPush($request->id,$request->cantidad);
 
         $productos = $request->session()->get('productos');
       }
@@ -89,8 +89,11 @@ class SessionService
 
    }
 
-   public function searchAndPush($productId){
+   public function searchAndPush($productId,$cantidad){
       $producto = Producto::with('Marca')->with('Imagenes')->find($productId);
+
+      $producto->setCantidadAttribute($cantidad);
+
 
       $this->sessionRequest->session()->push('productos', $producto);
    }

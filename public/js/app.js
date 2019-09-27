@@ -1899,8 +1899,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 Vue.component('productoCart', __webpack_require__(/*! ./producto_cart.vue */ "./resources/js/components/producto_cart.vue")["default"]);
@@ -2315,6 +2313,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2329,13 +2331,16 @@ __webpack_require__.r(__webpack_exports__);
     console.log('Component mounted.');
   },
   data: function data() {
-    return {// content:"Esto es el contenido"
+    return {
+      cantidad: Number // content:"Esto es el contenido"
+
     };
   },
   methods: {
     cargarCarrito: function cargarCarrito() {
       _store_carritoStore_js__WEBPACK_IMPORTED_MODULE_1__["carritoStore"].dispatch('agregarACarrito', {
-        id: this.id
+        id: this.id,
+        cantidad: this.cantidad
       });
       this.$emit('alertar', 'Cargaste una ' + this.modelo + ' en tu carrito de compras');
       _bus_event_bus_js__WEBPACK_IMPORTED_MODULE_0__["EventBus"].$emit('contarCarrito', true);
@@ -2354,8 +2359,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
 //
 //
 //
@@ -2476,6 +2479,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store_buscadorStore_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../store/buscadorStore.js */ "./resources/js/components/store/buscadorStore.js");
+/* harmony import */ var vue_click_outside__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-click-outside */ "./node_modules/vue-click-outside/index.js");
+/* harmony import */ var vue_click_outside__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_click_outside__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -2531,9 +2536,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {},
@@ -2558,8 +2561,7 @@ __webpack_require__.r(__webpack_exports__);
           _this.productos = response;
         }, function (error) {
           alert(error);
-        }); //this.productos = buscadorStore.state.productos
-        //console.log(this.productos)
+        });
 
         if (productos) {
           this.existeProducto = true;
@@ -2579,9 +2581,12 @@ __webpack_require__.r(__webpack_exports__);
     }(function (id) {
       alert(id);
     }),
-    setExisteProducto: function setExisteProducto() {
+    hide: function hide() {
       this.existeProducto = false;
     }
+  },
+  directives: {
+    ClickOutside: vue_click_outside__WEBPACK_IMPORTED_MODULE_1___default.a
   }
 });
 
@@ -37934,6 +37939,85 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/vue-click-outside/index.js":
+/*!*************************************************!*\
+  !*** ./node_modules/vue-click-outside/index.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function validate(binding) {
+  if (typeof binding.value !== 'function') {
+    console.warn('[Vue-click-outside:] provided expression', binding.expression, 'is not a function.')
+    return false
+  }
+
+  return true
+}
+
+function isPopup(popupItem, elements) {
+  if (!popupItem || !elements)
+    return false
+
+  for (var i = 0, len = elements.length; i < len; i++) {
+    try {
+      if (popupItem.contains(elements[i])) {
+        return true
+      }
+      if (elements[i].contains(popupItem)) {
+        return false
+      }
+    } catch(e) {
+      return false
+    }
+  }
+
+  return false
+}
+
+function isServer(vNode) {
+  return typeof vNode.componentInstance !== 'undefined' && vNode.componentInstance.$isServer
+}
+
+exports = module.exports = {
+  bind: function (el, binding, vNode) {
+    if (!validate(binding)) return
+
+    // Define Handler and cache it on the element
+    function handler(e) {
+      if (!vNode.context) return
+
+      // some components may have related popup item, on which we shall prevent the click outside event handler.
+      var elements = e.path || (e.composedPath && e.composedPath())
+      elements && elements.length > 0 && elements.unshift(e.target)
+      
+      if (el.contains(e.target) || isPopup(vNode.context.popupItem, elements)) return
+
+      el.__vueClickOutside__.callback(e)
+    }
+
+    // add Event Listeners
+    el.__vueClickOutside__ = {
+      handler: handler,
+      callback: binding.value
+    }
+    !isServer(vNode) && document.addEventListener('click', handler)
+  },
+
+  update: function (el, binding) {
+    if (validate(binding)) el.__vueClickOutside__.callback = binding.value
+  },
+  
+  unbind: function (el, binding, vNode) {
+    // Remove Event Listeners
+    !isServer(vNode) && document.removeEventListener('click', el.__vueClickOutside__.handler)
+    delete el.__vueClickOutside__
+  }
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/carrito.vue?vue&type=template&id=5fbc8f4b&":
 /*!**********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/carrito.vue?vue&type=template&id=5fbc8f4b& ***!
@@ -37968,84 +38052,75 @@ var render = function() {
         _c(
           "ul",
           _vm._l(_vm.carrito, function(producto, key) {
-            return _c(
-              "li",
-              { attrs: { id: producto.id } },
-              [
-                _c(
-                  "a",
-                  {
-                    staticClass: "close-btn",
-                    on: {
-                      click: function($event) {
-                        return _vm.emitirConfirm(
-                          producto.id,
-                          producto.modelo,
-                          key
-                        )
-                      }
+            return _c("li", { attrs: { id: producto.id } }, [
+              _c(
+                "a",
+                {
+                  staticClass: "close-btn",
+                  on: {
+                    click: function($event) {
+                      return _vm.emitirConfirm(
+                        producto.id,
+                        producto.modelo,
+                        key
+                      )
                     }
-                  },
-                  [_c("i", { staticClass: "far fa-times-circle" })]
-                ),
+                  }
+                },
+                [_c("i", { staticClass: "far fa-times-circle" })]
+              ),
+              _vm._v(" "),
+              _c("ul", { staticClass: "flex producto text-center" }, [
+                _c("li", [
+                  _c("div", {
+                    staticClass: "img",
+                    style: {
+                      backgroundImage:
+                        "url(/img/" + producto.imagenes[0].nombre_archivo + ")"
+                    },
+                    attrs: { alt: "" }
+                  })
+                ]),
                 _vm._v(" "),
-                _vm._l(producto.marca, function(marca) {
-                  return _c("div", [
-                    _c("ul", { staticClass: "flex producto text-center" }, [
-                      _c("li", [
-                        _c("div", {
-                          staticClass: "img",
-                          style: {
-                            backgroundImage:
-                              "url(/img/" +
-                              producto.imagenes.nombre_archivo +
-                              ")"
-                          },
-                          attrs: { alt: "" }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("li", [
-                        _c("h4", [
-                          _vm._v(
-                            "\r\n                                    " +
-                              _vm._s(producto.modelo) +
-                              "\r\n                                "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("h4", [
-                          _vm._v(
-                            "\r\n                                    " +
-                              _vm._s(marca.descripcion) +
-                              "\r\n\r\n                                "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("h4", [
-                          _vm._v(
-                            "\r\n                                    $" +
-                              _vm._s(producto.precio) +
-                              "\r\n                                "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          attrs: { type: "text", name: "cantidad" }
-                        }),
-                        _vm._v(" "),
-                        _c("label", { attrs: { for: "cantidad" } }, [
-                          _vm._v("unidades")
-                        ])
-                      ])
-                    ])
+                _c("li", [
+                  _c("h4", [
+                    _vm._v(
+                      "\r\n                                    " +
+                        _vm._s(producto.modelo) +
+                        "\r\n                                "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("h4", [
+                    _vm._v(
+                      "\r\n                                    " +
+                        _vm._s(producto.marca.descripcion) +
+                        "\r\n\r\n                                "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("h4", [
+                    _vm._v(
+                      "\r\n                                    $" +
+                        _vm._s(producto.precio) +
+                        "\r\n                                "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    staticClass: "form-control",
+                    attrs: { type: "number", name: "cantidad" },
+                    domProps: { value: producto.cantidad }
+                  }),
+                  _vm._v(" "),
+                  _c("label", { attrs: { for: "cantidad" } }, [
+                    _vm._v("unidades")
                   ])
-                }),
-                _vm._v(" "),
-                _c("hr")
-              ],
-              2
-            )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("hr")
+            ])
           }),
           0
         )
@@ -38439,6 +38514,29 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.cantidad,
+                  expression: "cantidad"
+                }
+              ],
+              attrs: { type: "number", name: "cantidad" },
+              domProps: { value: _vm.cantidad },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.cantidad = $event.target.value
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", [
             _c(
               "a",
               {
@@ -38492,25 +38590,19 @@ var render = function() {
               _vm._l(_vm.productos, function(producto) {
                 return _c(
                   "li",
-                  _vm._l(producto.marca, function(marca) {
-                    return _c(
-                      "div",
-                      [
-                        _c("producto", {
-                          key: producto.id,
-                          attrs: {
-                            id: producto.id,
-                            modelo: producto.modelo,
-                            marca: marca.descripcion,
-                            img: producto.imagenes.nombre_archivo,
-                            precio: producto.precio
-                          }
-                        })
-                      ],
-                      1
-                    )
-                  }),
-                  0
+                  [
+                    _c("producto", {
+                      key: producto.id,
+                      attrs: {
+                        id: producto.id,
+                        modelo: producto.modelo,
+                        marca: producto.marca.descripcion,
+                        img: producto.imagenes[0].nombre_archivo,
+                        precio: producto.precio
+                      }
+                    })
+                  ],
+                  1
                 )
               }),
               0
@@ -38647,17 +38739,13 @@ var render = function() {
                 {
                   directives: [
                     {
-                      name: "closable",
-                      rawName: "v-closable",
-                      value: {
-                        exclude: [".result-cont"],
-                        handler: "setExisteProducto"
-                      },
-                      expression:
-                        "{\r\n                                                    exclude: ['.result-cont'],\r\n                                                    handler: 'setExisteProducto'\r\n                                                  }"
+                      name: "click-outside",
+                      rawName: "v-click-outside",
+                      value: _vm.hide,
+                      expression: "hide"
                     }
                   ],
-                  staticClass: "result-cont  fadeIn "
+                  staticClass: "result-cont  fadeIn  "
                 },
                 [
                   _c(
@@ -38674,7 +38762,7 @@ var render = function() {
                                   "/producto_detalle/" +
                                   producto.id +
                                   "/" +
-                                  producto.marca[0].descripcion +
+                                  producto.marca.descripcion +
                                   "/" +
                                   producto.modelo +
                                   "/" +
@@ -38693,7 +38781,7 @@ var render = function() {
                                 _c("span", [
                                   _vm._v(
                                     "\r\n                                " +
-                                      _vm._s(producto.marca[0].descripcion) +
+                                      _vm._s(producto.marca.descripcion) +
                                       "\r\n                            \r\n                            "
                                   )
                                 ]),
@@ -38703,9 +38791,7 @@ var render = function() {
                                 _c("span", [
                                   _vm._v(
                                     "\r\n                                Categoría: " +
-                                      _vm._s(
-                                        producto.categoria[0].descripcion
-                                      ) +
+                                      _vm._s(producto.categoria.descripcion) +
                                       "\r\n                            "
                                   )
                                 ])
@@ -38717,7 +38803,7 @@ var render = function() {
                                   style: {
                                     backgroundImage:
                                       "url(/img/" +
-                                      producto.imagenes.nombre_archivo +
+                                      producto.imagenes[0].nombre_archivo +
                                       ")"
                                   },
                                   attrs: { alt: "" }
@@ -54718,35 +54804,6 @@ Vue.component('header-component', __webpack_require__(/*! ./components/header.vu
 Vue.component('carrito', __webpack_require__(/*! ./components/carrito.vue */ "./resources/js/components/carrito.vue")["default"]);
 Vue.component('alert', __webpack_require__(/*! ./components/widgets/alert.vue */ "./resources/js/components/widgets/alert.vue")["default"]);
 Vue.component('confirm', __webpack_require__(/*! ./components/widgets/confirm.vue */ "./resources/js/components/widgets/confirm.vue")["default"]);
-var handleOutsideClick;
-Vue.directive('closable', {
-  bind: function bind(el, binding, vnode) {
-    handleOutsideClick = function handleOutsideClick(e) {
-      e.stopPropagation();
-      var _binding$value = binding.value,
-          handler = _binding$value.handler,
-          exclude = _binding$value.exclude;
-      var clickedOnExcludedEl = false;
-      exclude.forEach(function (refName) {
-        if (!clickedOnExcludedEl) {
-          var excludedEl = vnode.context.$refs[refName];
-          clickedOnExcludedEl = excludedEl.contains(e.target);
-        }
-      });
-
-      if (!el.contains(e.target) && !clickedOnExcludedEl) {
-        vnode.context[handler]();
-      }
-    };
-
-    document.addEventListener('click', handleOutsideClick);
-    document.addEventListener('touchstart', handleOutsideClick);
-  },
-  unbind: function unbind() {
-    document.removeEventListener('click', handleOutsideClick);
-    document.removeEventListener('touchstart', handleOutsideClick);
-  }
-});
 var routes = [{
   path: '/content/:headerName/:content',
   component: __webpack_require__(/*! ./components/content.vue */ "./resources/js/components/content.vue")["default"],
@@ -55488,7 +55545,8 @@ var carritoStore = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
       var commit = _ref.commit;
       console.log('asd2222asd' + data.id);
       axios.post('/cargarCarrito', {
-        id: data.id
+        id: data.id,
+        cantidad: data.cantidad
       }).then(function (response) {
         console.log(response.data);
       });

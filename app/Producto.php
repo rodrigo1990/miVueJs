@@ -8,20 +8,31 @@ class Producto extends Model
 {
     protected $table='producto';
     public $timestamps = false;
+    protected $append = ['cantidad'];
 
     public function Categoria(){
-		return $this->hasMany('App\Categoria','id','categoria_id');
+		return $this->belongsTo('App\Categoria');
 	}
 
 
 	public function Marca(){
-		return $this->hasMany('App\Marca','id','marca_id');
+		return $this->belongsTo('App\Marca');
 	}
 
 
 	public function Imagenes(){
-		return $this->belongsTo('App\ImagenProducto','id','producto_id');
+		return $this->hasMany('App\ImagenProducto');
 	}
+
+	public function getCantidadAttribute()
+    {
+        return $this->attributes['cantidad'];
+    }
+
+    public function setCantidadAttribute($cantidad)
+    {
+        $this->attributes['cantidad']=$cantidad;
+    }
 
 
 }

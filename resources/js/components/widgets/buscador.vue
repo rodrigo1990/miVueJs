@@ -6,13 +6,10 @@
     <transition name="fade" mode='out-in'> 
 	<div v-if="existeProducto">
         
-            <div class="result-cont  fadeIn " v-closable="{
-                                                    exclude: ['.result-cont'],
-                                                    handler: 'setExisteProducto'
-                                                  }">
+            <div class="result-cont  fadeIn  " v-click-outside="hide">
         		<ul>
         			<li v-for="(producto,index) in productos">
-                     <router-link v-bind:to="'/producto_detalle/'+producto.id+'/'+producto.marca[0].descripcion+'/'+producto.modelo+'/'+producto.precio">    
+                     <router-link v-bind:to="'/producto_detalle/'+producto.id+'/'+producto.marca.descripcion+'/'+producto.modelo+'/'+producto.precio">    
                         <div class="description">
                             
 
@@ -24,14 +21,14 @@
                             <br>
 
                             <span >
-                                {{producto.marca[0].descripcion}}
+                                {{producto.marca.descripcion}}
                             
                             </span>
                             
                              <br>   
 
                             <span>
-                                Categoría: {{producto.categoria[0].descripcion}}
+                                Categoría: {{producto.categoria.descripcion}}
                             </span>
 
                 
@@ -39,7 +36,7 @@
 
                         <div class="img-cont">
 
-                            <div class="img"  v-bind:style="{ backgroundImage: 'url(/img/' + producto.imagenes.nombre_archivo + ')' }" alt=""></div>
+                            <div class="img"  v-bind:style="{ backgroundImage: 'url(/img/' + producto.imagenes[0].nombre_archivo + ')' }" alt=""></div>
 
                         </div>
 
@@ -58,6 +55,7 @@
 
 <script>
 import {buscadorStore} from '../store/buscadorStore.js'
+import ClickOutside from 'vue-click-outside'
     export default {
         mounted() {        
         	
@@ -88,10 +86,6 @@ import {buscadorStore} from '../store/buscadorStore.js'
                     } 
                     )
 
-            		//this.productos = buscadorStore.state.productos
-
-                    //console.log(this.productos)
-
                     if(productos){
                         this.existeProducto=true
                     }
@@ -101,9 +95,12 @@ import {buscadorStore} from '../store/buscadorStore.js'
             alert:function(id){
                 alert(id);
             },
-            setExisteProducto:function(){
+            hide:function(){
                 this.existeProducto=false
             }
-        }
+        },
+        directives: {
+            ClickOutside
+          }
     }
 </script>

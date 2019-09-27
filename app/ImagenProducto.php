@@ -11,6 +11,6 @@ class ImagenProducto extends Model
 
 
 	public function Producto(){
-		return $this->hasMany('App\Producto');
+		return $this->belongsTo('App\Producto');
 	}
 }

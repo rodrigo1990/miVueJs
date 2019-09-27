@@ -4,32 +4,31 @@
         <a class="close-btn" v-on:click="$emit('set-show-cart',mostrarCarrito)">
             <i class="far fa-times-circle"></i>
         </a>
-        <div class="anchura">
+        <div class="anchura" >
             <ul>
                 <li v-for="producto, key in carrito" :id="producto.id">
                         
                       <a class="close-btn" v-on:click="emitirConfirm(producto.id,producto.modelo,key)"><i class="far fa-times-circle"></i></a>
 
-                    <div v-for="marca in producto.marca">
                         <!-- REF="PRODUCTOCART" => Estoy referenciando al producto como productoCart -->
 
                         <ul class="flex producto text-center" >  
                             <li>                    
-                                <div class="img"  v-bind:style="{ backgroundImage: 'url(/img/' + producto.imagenes.nombre_archivo + ')' }" alt=""></div>
+                                <div class="img"  v-bind:style="{ backgroundImage: 'url(/img/' + producto.imagenes[0].nombre_archivo + ')' }" alt=""></div>
                             </li>
                             <li>
                                 <h4>
                                     {{producto.modelo}}
                                 </h4>
                                 <h4>
-                                    {{marca.descripcion}}
+                                    {{producto.marca.descripcion}}
 
                                 </h4>
                                 <h4>
                                     ${{producto.precio}}
                                 </h4>
-                                    <input type="text" name="cantidad"> 
-                                <label for="cantidad">unidades</label>
+                                    <input type="number" name="cantidad" class="form-control" v-bind:value=" producto.cantidad"> 
+                                     <label for="cantidad">unidades</label>
                                 
 
                             </li>
@@ -48,7 +47,6 @@
 
 
                         </productoCart>-->
-                    </div>
                     <hr>
                 </li>
 

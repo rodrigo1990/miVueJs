@@ -17,7 +17,8 @@ export const carritoStore = new Vuex.Store({
   		console.log('asd2222asd'+data.id);
   		axios
             .post('/cargarCarrito',{
-              id:data.id
+              id:data.id,
+              cantidad:data.cantidad
 
 
             })

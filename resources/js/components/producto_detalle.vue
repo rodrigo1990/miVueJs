@@ -13,6 +13,10 @@
                     	${{precio}}
                     </div>
                     <div>
+                        <input type="number" name="cantidad" v-model="cantidad">
+                    </div>
+
+                    <div>
                     	<a class="comprar-btn" v-on:click=" cargarCarrito()"> COMPRAR</a>
                     </div>
                 </div>
@@ -32,7 +36,8 @@ import { carritoStore } from './store/carritoStore.js';
             marca:String,
             modelo:String,
             precio:String,
-            img:String,
+            img:String
+            
         },
         mounted() {
 
@@ -43,8 +48,8 @@ import { carritoStore } from './store/carritoStore.js';
         data(){
 
             return{
-
-                
+                cantidad:Number
+                    
                // content:"Esto es el contenido"
             }
         },
@@ -53,7 +58,8 @@ import { carritoStore } from './store/carritoStore.js';
           cargarCarrito: function(){
             
             carritoStore.dispatch('agregarACarrito',{
-                id:this.id
+                id:this.id,
+                cantidad:this.cantidad
             });
 
             this.$emit('alertar','Cargaste una '+ this.modelo +' en tu carrito de compras');
