@@ -35,4 +35,8 @@ class CarritoController extends Controller
         return $this->sessionService->eliminarProductoDeCarrito($request);
     }
 
+    public function updateCantidad(Request $request){
+        return $this->sessionService->updateCantidad($request);   
+    }
+
 }

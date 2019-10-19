@@ -27,26 +27,13 @@
                                 <h4>
                                     ${{producto.precio}}
                                 </h4>
-                                    <input type="number" name="cantidad" class="form-control" v-bind:value=" producto.cantidad"> 
+                                    <input  type="number" name="cantidad"  class="form-control cantidadInput"  v-on:change="setCantidad(producto.id,key)" v-bind:value=" producto.cantidad"> 
                                      <label for="cantidad">unidades</label>
                                 
 
                             </li>
                         </ul>
 
-                      <!--    <productoCart
-                                v-bind:key="producto.id"
-                                v-bind:id="producto.id"
-                                v-bind:modelo=""
-                                v-bind:marca = ""
-                                v-bind:img = ""
-                                v-bind:precio = ""
-                                ref="productoCart"
-                                >
-                                    
-
-
-                        </productoCart>-->
                     <hr>
                 </li>
 
@@ -60,7 +47,6 @@
 <script>
 import { EventBus } from './bus/event-bus.js';
 import { carritoStore } from './store/carritoStore.js';
-Vue.component('productoCart', require('./producto_cart.vue').default);
     export default {
         mounted() {
 
@@ -85,10 +71,8 @@ Vue.component('productoCart', require('./producto_cart.vue').default);
 
             return{
             carrito:null,
-            headerName:"La empresa",
-            content:"En verdad esto no es una empresa,estoy aprendiendo VueJs. Jeh =D",
-            imgProducto:'../assets/img/p1.jpg',
-            mostrarCarrito:false
+            mostrarCarrito:false,
+            cantidad:null
             }
         },
         methods:{
@@ -99,11 +83,30 @@ Vue.component('productoCart', require('./producto_cart.vue').default);
 
             var mensaje = "¿Desea eliminar "+modelo+"?"; 
                 
-            EventBus.$emit('confirm',{'msg':mensaje,'key':key,'id':id})
+            EventBus.$emit('confirm',{'msg':mensaje,'key':key,'id':id})       
+
+          },
+
+          setCantidad:function(id,key){
+
+            var x = null;
+
+            x = document.getElementsByClassName('cantidadInput');
+
+            this.cantidad = x[key].value;
 
 
+            //¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡ CENTRALIZAR EN STORE !!!!!!!!!!!!!!!!!!!!!!!!
+            axios
+              .post('/updateCantidad',{
+                id:id,
+                cantidad:this.cantidad
+              })
+              .then(response => {
+                console.log(response.data)
+            })
 
-            
+
 
           }
         }

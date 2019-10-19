@@ -27,6 +27,34 @@ class SessionService
    
    }
 
+   public function updateCantidad($request){
+          
+          $productos = $request->session()->get('productos');
+    
+          if($productos){
+
+            foreach($productos as $key => $producto) {
+
+              if($producto->id == $request->id){
+
+                $producto->cantidad = $request->cantidad;
+
+                break;
+
+              }
+
+            }
+
+
+          }
+
+         return json_encode($productos);
+
+
+
+      
+   }
+
 
    public function storeSessionData($request) {
 
@@ -45,6 +73,8 @@ class SessionService
 
                 $existe = true;
 
+                $producto->cantidad = $request->cantidad;
+
                 break;
 
               }
@@ -55,7 +85,7 @@ class SessionService
           }
 
 
-          if($existe!=true){
+          if($existe==false){
 
             $this->searchAndPush($request->id,$request->cantidad);
 
@@ -97,6 +127,9 @@ class SessionService
 
       $this->sessionRequest->session()->push('productos', $producto);
    }
+
+
+
 
    public function eliminarProductoDeCarrito(Request $request){
       

@@ -27,6 +27,8 @@ Route::post('/cargarCarrito','CarritoController@cargarCarrito');
 Route::get('/getCarrito','CarritoController@getCarrito');
 
 
+Route::post('/updateCantidad','CarritoController@updateCantidad');
+
 
 Route::post('/eliminarProductoDeCarrito','CarritoController@eliminarProductoDeCarrito');
 
