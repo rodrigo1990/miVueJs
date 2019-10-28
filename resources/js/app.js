@@ -35,8 +35,10 @@ Vue.use(Vuex)
 
 Vue.component('header-component', require('./components/header.vue').default);
 Vue.component('carrito', require('./components/carrito.vue').default);
+Vue.component('checkout', require('./components/checkout.vue').default);
 Vue.component('alert', require('./components/widgets/alert.vue').default);
 Vue.component('confirm', require('./components/widgets/confirm.vue').default);
+
 
 
 const routes = [
@@ -68,6 +70,7 @@ const app = new Vue({
   buscadorStore,
       data:{
     	showCart:false,
+        showCheckOut:false,
     },
     methods:{
       setShowCart:function(bool){
@@ -79,6 +82,13 @@ const app = new Vue({
              
             EventBus.$emit('alertar',$msg);
         }
+
+    },
+    mounted(){
+            EventBus.$on('setCheckOut', data => {
+              this.showCheckOut=data;
+            });
+
 
     }
 

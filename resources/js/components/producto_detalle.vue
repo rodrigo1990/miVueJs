@@ -9,8 +9,13 @@
                     <div class="">
                         {{modelo}}
                     </div>
-                    <div>
+                    <div v-if="esOferta==1">
                     	${{precio}}
+                    </div>
+                     <div v-else>
+                        <strike> ${{precio}}</strike>
+                        <br>
+                        ${{666}}
                     </div>
                     <div>
                         <input type="number" name="cantidad" v-model="cantidad">
@@ -32,23 +37,33 @@ import { carritoStore } from './store/carritoStore.js';
 
     export default {
         props:{
-        	id:String,
-            marca:String,
-            modelo:String,
-            precio:String,
-            img:String
-            
+        	id:String
         },
         mounted() {
 
-
-            console.log('Component mounted.')
+            axios
+              .post('/getProducto',{
+                id:this.id,
+              })
+              .then(response => {
+                console.log(response.data);
+                this.marca = response.data.marca.descripcion;
+                this.modelo = response.data.modelo;
+                this.precio = response.data.precio;  
+                console.log(response.data.marca.descripcion);
+                })
         },
 
         data(){
 
             return{
-                cantidad:Number
+                cantidad:1,
+                marca:String,
+                modelo:String,
+                precio:Number,
+                precioDescuento:Number,
+                img:String,
+                esOferta:Number
                     
                // content:"Esto es el contenido"
             }

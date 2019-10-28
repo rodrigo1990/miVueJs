@@ -27,6 +27,8 @@ export const carritoStore = new Vuex.Store({
             })
   		},
   		eliminarProducto({commit},data){
+        return new Promise((resolve, reject) => {
+
 
             console.log("eliminar"+data.id);
             axios
@@ -36,9 +38,79 @@ export const carritoStore = new Vuex.Store({
             .then(function(response){
               console.log(response.data.id);
             })
-
+        });
             
+          },
+      getTotal:function(){
+        return new Promise((resolve, reject) => {
+          axios
+            .post('/getTotal')
+            .then(response => {
+
+              resolve(response.data)
+
+            }, error => {
+                reject(error);
+            });    
+        });
+      },
+      
+      getSubTotal:function(){
+        return new Promise((resolve, reject) => {
+        axios
+          .post('/getSubTotal')
+          .then(response => {
+            resolve(response.data);
+          },error => {
+              reject(error)
+          });    
+
+        });
+
+      },
+
+      getDescuentos:function(){
+
+        return new Promise((resolve, reject) => {
+        axios
+          .post('/getDescuentos')
+          .then(response => {
+            resolve(response.data);
+          },error => {
+              reject(error)
+          });    
+
+        });   
+
+      },
+
+      calculateSubtotal:function({commit},data){
+        
+        return new Promise((resolve, reject) => {
+          
+          var subtotal = 0;
+        
+          data.carrito.forEach(p => {
+          if(data.id==p.id){
+
+            if(subtotal==0)
+          
+              subtotal = p.precio * data.cantidad;
+          
+            else
+          
+              subtotal += p.precio * data.cantidad;
           }
+          
+          });
+
+          console.log(subtotal);
+
+          resolve(subtotal);
+        
+        });        
+    
+      }
 
 
 

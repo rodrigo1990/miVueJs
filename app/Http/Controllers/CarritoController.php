@@ -30,6 +30,19 @@ class CarritoController extends Controller
     }
 
 
+    public function getTotalCarrito(Request $request){
+        return  $this->sessionService->getTotalCarrito($request);
+    }
+
+    public function getSubTotalCarrito(Request $request){
+        return  $this->sessionService->getSubTotalCarrito($request);
+    }
+
+    public function getDescuentosCarrito(Request $request){
+        return  $this->sessionService->getDescuentosCarrito($request);
+    }
+
+
 
     public function eliminarProductoDeCarrito(Request $request){
         return $this->sessionService->eliminarProductoDeCarrito($request);

@@ -19,6 +19,7 @@ Route::get('/', function () {
 Route::get('/get','ProductoController@getProductos');
 Route::get('/getCategorias','ProductoController@getCategorias');
 Route::get('/getBuscarProductos/{producto}','ProductoController@getBuscarProductos');
+Route::post('/getProducto','ProductoController@getProducto');
 
 
 Route::post('/cargarCarrito','CarritoController@cargarCarrito');
@@ -32,4 +33,6 @@ Route::post('/updateCantidad','CarritoController@updateCantidad');
 
 Route::post('/eliminarProductoDeCarrito','CarritoController@eliminarProductoDeCarrito');
 
-
+Route::post('/getTotal','CarritoController@getTotalCarrito');
+Route::post('/getSubTotal','CarritoController@getSubTotalCarrito');
+Route::post('/getDescuentos','CarritoController@getDescuentosCarrito');

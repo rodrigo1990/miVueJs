@@ -153,5 +153,77 @@ class SessionService
 
    }
 
+   public function getSubTotalCarrito($request){
+      
+      $subtotal=0;
+
+      if($request->session()->has('productos')){
+            $productos = $request->session()->get('productos');
+            
+            foreach($productos as $key => $producto) {
+      
+              $subtotal += ($producto->precio*$producto->cantidad);
+              
+            }
+
+      }
+      
+
+      return $subtotal;
+
+   }
+
+
+   public function getDescuentosCarrito($request){
+      
+      $descuentos=0;
+
+      if($request->session()->has('productos')){
+            $productos = $request->session()->get('productos');
+            
+            foreach($productos as $key => $producto) {
+      
+              $descuentos += ($producto->precio_descuento*$producto->cantidad);
+              
+            }
+
+      }
+      
+
+      return $descuentos;
+
+   }
+
+   public function getTotalCarrito($request){
+      
+      $total=0;
+      $subtotal=0;
+      $descuentos=0;
+
+      if($request->session()->has('productos')){
+            $productos = $request->session()->get('productos');
+            
+            foreach($productos as $key => $producto) {
+      
+              $subtotal += ($producto->precio*$producto->cantidad);
+              
+              if($producto->es_oferta==1){
+              
+                $descuentos += ($producto->precio_descuento*$producto->cantidad);
+              
+              }
+
+
+              
+            }
+
+      }
+      
+      $total = $subtotal - $descuentos;
+
+      return $total;
+
+   }
+
 
 }

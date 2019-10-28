@@ -30,10 +30,19 @@
                 
                  ></carrito>
              </transition>
+            <transition name="fade" mode='out-in'>
+
+             <checkout v-if="showCheckOut"></checkout>
+
+             </transition>
+
+
+
 
              <alert></alert>
              <confirm></confirm>
-    
+            
+
         </div>
 
 

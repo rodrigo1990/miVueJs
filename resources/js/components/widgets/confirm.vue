@@ -56,6 +56,8 @@ import {carritoStore} from '../store/carritoStore.js';
                 
                 EventBus.$emit('contarCarrito', true);
 
+                EventBus.$emit('calcular', true);
+
 
             },
         }

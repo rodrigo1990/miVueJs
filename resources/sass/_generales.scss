@@ -1,4 +1,6 @@
-
+#app{
+	height: 100%;
+}
 
 body{
     overflow-x: hidden;
@@ -92,3 +94,18 @@ div.row.content{
 		    background-position: center;
    			 background-size: cover;
 		}
+
+
+.red{
+	color:red;
+}
+
+
+.green{
+	color:green;
+}
+
+
+.blue{
+	color:blue;
+}

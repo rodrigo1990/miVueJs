@@ -1,0 +1,15 @@
+.checkout{
+	position:absolute;
+	@include center-abs(0);
+	background:white;
+
+	.close-btn{
+		float:right;
+		right:0;
+		top:5px;
+
+		i{
+			font-size: 2rem;
+		}
+	}
+}

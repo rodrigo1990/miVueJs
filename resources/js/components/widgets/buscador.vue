@@ -1,12 +1,14 @@
 
 <template>
 <div class="buscador-cont">
+    
 	<input type="text" class="form-control" v-model="input" v-on:keyup="buscar()" placeholder="Ingrese su mensaje aqui">
 
     <transition name="fade" mode='out-in'> 
 	<div v-if="existeProducto">
-        
+           
             <div class="result-cont  fadeIn  " v-click-outside="hide">
+                 <preloader></preloader>
         		<ul>
         			<li v-for="(producto,index) in productos">
                      <router-link v-bind:to="'/producto_detalle/'+producto.id+'/'+producto.marca.descripcion+'/'+producto.modelo+'/'+producto.precio">    
@@ -54,8 +56,11 @@
 </template>
 
 <script>
-import {buscadorStore} from '../store/buscadorStore.js'
-import ClickOutside from 'vue-click-outside'
+Vue.component('preloader', require('./preloader.vue').default);
+import {buscadorStore} from '../store/buscadorStore.js';
+import ClickOutside from 'vue-click-outside';
+import { EventBus } from '../bus/event-bus.js';
+
     export default {
         mounted() {        
         	
@@ -71,8 +76,17 @@ import ClickOutside from 'vue-click-outside'
         },
         methods:{
         	buscar:function(){
+                EventBus.$emit('preloader',true);
+
                 if(this.input==''){
+                
                     this.existeProducto=false;
+                
+                    setTimeout(function() {
+                    EventBus.$emit('preloader',false);
+                  }, 1000);
+                
+                
                 }else{
             		
                     var productos = buscadorStore.dispatch('buscar',{
@@ -87,7 +101,10 @@ import ClickOutside from 'vue-click-outside'
                     )
 
                     if(productos){
-                        this.existeProducto=true
+                        this.existeProducto=true;
+                        setTimeout(function() {
+                    EventBus.$emit('preloader',false);
+                  }, 1000);
                     }
 
                 }

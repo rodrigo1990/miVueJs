@@ -66,8 +66,10 @@ class DatabaseSeeder extends Seeder
             'modelo' => 'Old School',
             'marca_id' => 'Vans',
             'precio' => 245.50,
+            'precio_descuento' => 150.50,
             'marca_id' => 1,
-            'categoria_id' => 1
+            'categoria_id' => 1,
+            'es_oferta' => 1
         ]);
         DB::table('producto')
      	->insert([
@@ -75,7 +77,9 @@ class DatabaseSeeder extends Seeder
             'marca_id' => 'Nike',
             'precio' => 560.55,
             'marca_id' => 2,
-            'categoria_id' => 2
+            'categoria_id' => 2,
+            'precio_descuento' => 250.50,
+            'es_oferta' => 1
         ]);
         DB::table('producto')
      	->insert([
@@ -83,7 +87,9 @@ class DatabaseSeeder extends Seeder
             'marca_id' => 'Running',
             'precio' => 245.50,
             'marca_id' => 3,
-            'categoria_id' => 3
+            'categoria_id' => 3,
+            'precio_descuento' => 180.50,
+            'es_oferta' => 1
         ]);
      	DB::table('producto')
         ->insert([
@@ -91,7 +97,9 @@ class DatabaseSeeder extends Seeder
             'marca_id' => 'Skate',
             'precio' => 1500.99,
             'marca_id' => 4,
-            'categoria_id' => 4
+            'categoria_id' => 4,
+            'precio_descuento' => null,
+            'es_oferta' => 0
         ]);
 
 

@@ -15,6 +15,12 @@ class ProductoController extends Controller
     }
 
 
+    public function getProducto(Request $request){
+
+      return  Producto::with('Marca')->with('Imagenes')->find($request->id);
+    }
+
+
     public function getBuscarProductos(Request $request){
 
     	/*$productos = DB::table('producto')

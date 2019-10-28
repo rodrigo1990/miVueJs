@@ -19,6 +19,8 @@ class Producto extends Migration
             $table->decimal('precio',10,2);
             $table->unsignedInteger('marca_id');
             $table->unsignedInteger('categoria_id');
+            $table->integer('es_oferta');
+            $table->decimal('precio_descuento',10,2)->nullable();
 
             $table->foreign('marca_id')->references('id')->on('Marca');
             $table->foreign('categoria_id')->references('id')->on('Categoria');
