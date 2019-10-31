@@ -15,7 +15,7 @@
                      <div v-else>
                         <strike> ${{precio}}</strike>
                         <br>
-                        ${{666}}
+                        ${{precioDescuento}}
                     </div>
                     <div>
                         <input type="number" name="cantidad" v-model="cantidad">
@@ -49,7 +49,8 @@ import { carritoStore } from './store/carritoStore.js';
                 console.log(response.data);
                 this.marca = response.data.marca.descripcion;
                 this.modelo = response.data.modelo;
-                this.precio = response.data.precio;  
+                this.precio = response.data.precio;
+                this.precioDescuento = response.data.precio_descuento  
                 console.log(response.data.marca.descripcion);
                 })
         },

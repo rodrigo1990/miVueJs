@@ -2566,6 +2566,7 @@ __webpack_require__.r(__webpack_exports__);
       _this.marca = response.data.marca.descripcion;
       _this.modelo = response.data.modelo;
       _this.precio = response.data.precio;
+      _this.precioDescuento = response.data.precio_descuento;
       console.log(response.data.marca.descripcion);
     });
   },
@@ -39172,7 +39173,7 @@ var render = function() {
                   _c("br"),
                   _vm._v(
                     "\n                    $" +
-                      _vm._s(666) +
+                      _vm._s(_vm.precioDescuento) +
                       "\n                "
                   )
                 ],
