@@ -93,7 +93,6 @@ import { EventBus } from '../bus/event-bus.js';
             			producto:this.input
             		}).then( response => {
 
-                    console.log(response)
                     this.productos = response
                     }, error =>{
                         alert(error)

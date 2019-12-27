@@ -29,8 +29,6 @@ import {carritoStore} from '../store/carritoStore.js';
                   this.msg = data.msg;
                   this.idProducto= data.id;
                   this.keyProducto = data.key;
-
-                  console.log("Desde confirm"+this.idProducto)
                 });
         },
 

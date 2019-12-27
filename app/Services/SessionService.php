@@ -28,7 +28,7 @@ class SessionService
    }
 
    public function updateCantidad($request){
-          
+          //$request->session()->flush();
           $productos = $request->session()->get('productos');
     
           if($productos){

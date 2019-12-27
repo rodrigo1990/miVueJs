@@ -8,7 +8,7 @@
         <div class="anchura" >
           <preloader></preloader>
             <ul>
-                <li v-for="producto, key in carrito" :id="producto.id">
+                <li v-for="producto, key in carrito" :id="'p_'+producto.id">
                         
                       <a class="close-btn" v-on:click="emitirConfirm(producto.id,producto.modelo,key)"><i class="far fa-times-circle"></i></a>
 
@@ -35,7 +35,7 @@
                                     <br>
                                     ${{producto.precio_descuento}}
                                 </h4>
-                                    <input  type="number" name="cantidad"  class="form-control cantidadInput"  v-on:input="setCantidad($event,producto.id,key)" v-bind:value=" producto.cantidad"> 
+                                    <input  type="number" name="cantidad"  class="form-control cantidadInput"  v-on:input="setCantidad($event,'p_'+producto.id,producto.id)" v-bind:value=" producto.cantidad"> 
                                      <label for="cantidad">unidades</label>
                                 
 
@@ -112,8 +112,6 @@ import { carritoStore } from './store/carritoStore.js';
         mounted() {
 
           EventBus.$emit('preloader',true);
-
-          console.log('Componsent mounted.')
            
           this.getCarrito();
 
@@ -125,7 +123,7 @@ import { carritoStore } from './store/carritoStore.js';
         
           EventBus.$on('emitirEliminarProductoDeCarrito', data => {
             console.log("desde carrito"+data.idProducto+"");
-            $("li#"+data.idProducto+"").fadeOut();
+            //$("li#"+data.idProducto+"").fadeOut();
             });
 
 
@@ -139,7 +137,7 @@ import { carritoStore } from './store/carritoStore.js';
                   
                   setTimeout(function() {
                     EventBus.$emit('preloader',false);
-                  }, 1000);
+                  }, 2000);
                   
                   
               });
@@ -165,6 +163,7 @@ import { carritoStore } from './store/carritoStore.js';
             }
         },
         methods:{
+   
           showCheckOut:function(){
             EventBus.$emit('setCheckOut',true);
           },
@@ -173,7 +172,6 @@ import { carritoStore } from './store/carritoStore.js';
               .get('/getCarrito')
               .then(response => {
                 this.carrito = response.data
-                console.log(this.carrito)
               });
           },
 
@@ -184,7 +182,6 @@ import { carritoStore } from './store/carritoStore.js';
 
               this.total = total;
 
-              console.log(this.total);
 
             }, error =>{
             
@@ -233,17 +230,15 @@ import { carritoStore } from './store/carritoStore.js';
 
           },
 
-          setCantidad:function($event,id,key){
+          setCantidad:function($event,domId,id){
             
             EventBus.$emit('preloader',true);
 
             var x = null;
 
-            x = document.getElementsByClassName('cantidadInput');
+            x = document.querySelectorAll('#'+domId+" .cantidadInput");
 
-            console.log(x);
-
-            this.cantidad = x[key].value;
+            this.cantidad = x[0].value;
 
             //¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡ CENTRALIZAR EN STORE !!!!!!!!!!!!!!!!!!!!!!!!
             axios
@@ -252,8 +247,8 @@ import { carritoStore } from './store/carritoStore.js';
                 cantidad:this.cantidad
               })
               .then(response => {
-                console.log(response.data)
                 
+                //console.log(response.data)
             })
 
           this.descuentos = false;

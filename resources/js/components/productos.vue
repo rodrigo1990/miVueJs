@@ -44,13 +44,10 @@ Vue.component('producto', require('./producto.vue').default);
         },
         mounted() {
 
-
-            console.log('Component mounted.')
             axios
 		      .get('/get')
 		      .then(response => {
 		      	this.productos = response.data
-		      	console.log(this.productos)
 		      })
 
 

@@ -118,8 +118,6 @@
         	        	EventBus.$emit('preloader',true);
 
    
-    		console.log('Component mounted.')
-
 
     	Promise.all([this.getTotal(), this.getSubTotal(),this.getDescuentos()])
             .then((allResults) => {

@@ -78,7 +78,6 @@ import { EventBus } from './bus/event-bus.js';
 Vue.component('buscador', require('./widgets/buscador.vue').default);
     export default {	
         mounted() {
-            console.log('Component mounted.')
             //traigo el carrito al cargar
              axios
 		      .get('/getCarrito')
